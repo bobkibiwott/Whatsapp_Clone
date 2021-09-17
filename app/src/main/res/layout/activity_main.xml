@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:id="@+id/mainAppBar"
+        android:background="@color/purple_500"
+        android:gravity="center_vertical"
+        android:layout_height="45dp">
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="WhatsAppClone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_below="@+id/mainAppBar"
+        android:layout_width="match_parent"
+        android:background="@color/purple_500"
+        app:tabSelectedTextColor="@color/white"
+        android:layout_height="45dp"
+        android:id="@+id/tabLayout"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_below="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:backgroundTint="@color/purple_500"
+        android:src="@drawable/ic_baseline_chat_24"
+        android:layout_margin="16dp" />
+
+
+</RelativeLayout>

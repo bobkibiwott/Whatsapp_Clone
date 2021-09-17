@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneAuth">
+    <LinearLayout
+        android:layout_above="@+id/phoneAuthDone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textColor="@color/purple_700"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Enter your phone number"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+        <TextView
+            android:textColor="@android:color/black"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="WhatsApp will send an SMS message to verify your phone number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_autoDetectCountry="true"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="true"
+                android:layout_gravity="center_vertical"
+                />
+
+            <EditText
+                android:layout_gravity="center_vertical"
+                android:id="@+id/phoneAuthNumber"
+                android:layout_width="wrap_content"
+                android:ems="12"
+                android:layout_height="wrap_content"
+                android:hint="phone"
+                android:maxLength="15"
+                android:inputType="phone"
+                android:singleLine="true" />
+
+        </LinearLayout>
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:textSize="14sp"
+            android:text="Carrier charges may apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <Button
+        android:layout_margin="5dp"
+        android:id="@+id/phoneAuthDone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="DONE"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple_500"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

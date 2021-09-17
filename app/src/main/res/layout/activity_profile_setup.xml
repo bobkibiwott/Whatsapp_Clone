@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileSetup">
+    <LinearLayout
+        android:layout_above="@id/profileSetupNext"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:text="Profile info"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="Please provide a name and a optional profile photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileSetupProfilePhoto"
+            android:layout_margin="10dp"
+            android:src="@drawable/icon"
+            android:layout_width="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="100dp"
+            />
+            <ProgressBar
+                android:id="@+id/profileSetupProgressBar"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <EditText
+            android:maxLength="25"
+            android:maxLines="1"
+            app:backgroundTint="@color/purple_500"
+            android:inputType="text"
+            android:hint="Type your name here"
+            android:id="@+id/profileSetupUsername"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_margin="5dp"
+        android:id="@+id/profileSetupNext"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Next"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
