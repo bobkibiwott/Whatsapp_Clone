@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
     <TextView
         android:textStyle="bold"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/purple_500"
         android:textSize="18dp"
         android:gravity="center"
         android:text="Profile info"

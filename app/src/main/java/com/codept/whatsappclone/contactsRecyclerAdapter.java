@@ -53,7 +53,7 @@ public class contactsRecyclerAdapter extends RecyclerView.Adapter<contactsRecycl
             public void onClick(View v) {
 
                 Intent intent=new Intent(context,Messages.class);
-                intent.putExtra("messageID",userArrayList.get(position).getUid());
+                intent.putExtra("messageUserID",userArrayList.get(position).getUid());
                 context.startActivity(intent);
 
 

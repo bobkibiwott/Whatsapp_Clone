@@ -49,7 +49,7 @@ public class MyContacts extends AppCompatActivity {
 
                         User user=userSnap.getValue(User.class);
                         assert user != null;
-                        user.setUid(snapshot.getKey());
+                        user.setUid(userSnap.getKey());
                         userArrayList.add(user);
                     }
 

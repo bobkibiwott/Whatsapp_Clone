@@ -1,0 +1,66 @@
+package com.codept.whatsappclone;
+
+public class ChatModel {
+    private String UserID,message,sender,messageID,type;
+    private long timestamp;
+
+    public ChatModel() {
+    }
+
+    public ChatModel(String userID, String message, String sender, String messageID, String type, long timestamp) {
+        UserID = userID;
+        this.message = message;
+        this.sender = sender;
+        this.messageID = messageID;
+        this.type = type;
+        this.timestamp = timestamp;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+}
