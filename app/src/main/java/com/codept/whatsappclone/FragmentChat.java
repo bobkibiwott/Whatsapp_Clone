@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class FragmentChat extends Fragment {
 
@@ -31,6 +33,7 @@ public class FragmentChat extends Fragment {
     ArrayList<ChatModel> arrayList=new ArrayList<>();
     FirebaseAuth mAuth;
     DatabaseReference mRef;
+    String userID;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -40,11 +43,15 @@ public class FragmentChat extends Fragment {
 
         RecyclerView recyclerView=view.findViewById(R.id.recyclerView);
         LinearLayoutManager manager=new LinearLayoutManager(getContext());
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
         adapter=new ChatAdapter(getContext(),arrayList);
         //
         mAuth=FirebaseAuth.getInstance();
-        mRef= FirebaseDatabase.getInstance().getReference().child("messages").child(mAuth.getCurrentUser().getUid());
+        userID=mAuth.getCurrentUser().getUid();
+        mRef= FirebaseDatabase.getInstance().getReference().child("messages").child(mAuth.getCurrentUser().getUid()).child("users");
+        mRef.keepSynced(true);
         Query query=mRef.orderByChild("timestamp");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,22 +59,28 @@ public class FragmentChat extends Fragment {
                 arrayList.clear();
                 if(snapshot.exists())
                 {
-//                    arrayList.clear();
+                    arrayList.clear();
                     for(DataSnapshot snap:snapshot.getChildren())
                     {
-//                        Toast.makeText(getContext(), "Runned", Toast.LENGTH_SHORT).show();
                         ChatModel model=new ChatModel();
+
+                        assert model != null;
                         model.setUserID(snap.getKey());
                         arrayList.add(model);
                     }
+
                     recyclerView.setAdapter(adapter);
 
+                }else{
+                    arrayList.clear();
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
                 arrayList.clear();
+                adapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "Error "+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

@@ -24,7 +24,7 @@ public class MyContacts extends AppCompatActivity {
     private RecyclerView recyclerView;
      contactsRecyclerAdapter adapter;
     private ArrayList<User> userArrayList=new ArrayList<>();
-     FirebaseAuth auth;
+    private FirebaseAuth auth;
     private DatabaseReference userRef;
 
 
@@ -35,16 +35,20 @@ public class MyContacts extends AppCompatActivity {
         recyclerView=findViewById(R.id.myContactsRecyclerView);
         adapter=new contactsRecyclerAdapter(this,userArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setNestedScrollingEnabled(false);
 //        recyclerView.setItemAnimator(new DefaultItemAnimator());
 //        recyclerView.setAdapter(adapter);
 
 
         userRef=FirebaseDatabase.getInstance().getReference().child("users");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.keepSynced(true);
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                userArrayList.clear();
                 if(snapshot.exists())
                 {
+
                     for (DataSnapshot userSnap: snapshot.getChildren()) {
 
                         User user=userSnap.getValue(User.class);
@@ -52,30 +56,16 @@ public class MyContacts extends AppCompatActivity {
                         user.setUid(userSnap.getKey());
                         userArrayList.add(user);
                     }
-
                     recyclerView.setAdapter(adapter);
-
-//
-
-
                 }
-
-
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                userArrayList.clear();
+                Toast.makeText(MyContacts.this, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
-
-
-
-
-
-
 
     }
 }

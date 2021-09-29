@@ -52,4 +52,6 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     //pin view
     implementation 'io.github.chaosleung:pinview:1.4.4'
+    //okhttp
+//    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 }

@@ -2,12 +2,16 @@ package com.codept.whatsappclone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -58,6 +62,52 @@ public class MainActivity extends AppCompatActivity {
         //initialising
         tabLayout=findViewById(R.id.tabLayout);
         viewPager2=findViewById(R.id.viewPager);
+        ImageView searchButton,moreSettings;
+        moreSettings=findViewById(R.id.more);
+
+
+        ////
+
+        moreSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(MainActivity.this, moreSettings);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId())
+                        {
+                            case R.id.menu_newGroup:
+                                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.menu_newBroadcast:
+                                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.menu_linkedDevicesp:
+                                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.menu_starredMessages:
+                                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+                             case R.id.menu_settings:
+                                startActivity(new Intent(MainActivity.this,Settings.class));
+                                break;
+
+                        }
+//                        Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });
+
+        ////
 
         FragmentManager fm=getSupportFragmentManager();
         adapter=new FragmentAdapter(fm,getLifecycle());

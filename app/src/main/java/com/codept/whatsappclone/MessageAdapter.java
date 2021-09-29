@@ -15,6 +15,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,14 +52,51 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myViewHo
         messageClass mesClass=arrayList.get(position);
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
+        String userID=FirebaseAuth.getInstance().getCurrentUser().getUid();
         //If I sent the message
         if(TextUtils.equals(userId,mesClass.getSender()))
         {
             holder.sMessage.setText(mesClass.getMessage());
             holder.sentCard.setVisibility(View.VISIBLE);
+            if(mesClass.getSeen().equals("true"))
+            {
+                holder.sentStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.seen_icon));
+
+            }else if(mesClass.getReceived().equals("true")){
+                holder.sentStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.recieved_icon));
+
+            }else if(mesClass.getSent().equals("true"))
+            {
+                holder.sentStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.sent_icon));
+            }
         }else{
             holder.rMessage.setText(mesClass.getMessage());
             holder.incomingMessageCard.setVisibility(View.VISIBLE);
+        }
+
+        if(TextUtils.equals(userID,mesClass.getReceiver())){
+        DatabaseReference messageRef= FirebaseDatabase.getInstance().getReference()
+                .child("messages").child(mesClass.getSender()).child("users")
+                .child(mesClass.getReceiver()).child("message").child(mesClass.getMessageID());
+        messageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    String seen=snapshot.child("seen").getValue().toString();
+                    if(seen.equals("false")){
+                        messageRef.child("seen").setValue("true");
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
         }
 
     }
@@ -68,8 +110,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myViewHo
         TextView sMessage,sTime;
         ImageView sStatus;
         TextView rMessage,rTime;
-        LinearLayout sentCard;
-        RelativeLayout incomingMessageCard;
+        LinearLayout sentCard,incomingMessageCard;
+        ImageView sentStatus;
         public myViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             sMessage=itemView.findViewById(R.id.sentMessage);
@@ -79,6 +121,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myViewHo
             rTime=itemView.findViewById(R.id.incomingTime);
             sentCard=itemView.findViewById(R.id.sentMessageCard);
             incomingMessageCard=itemView.findViewById(R.id.incomingMessageCard);
+            sentStatus=itemView.findViewById(R.id.sentStatusImage);
 
 
         }

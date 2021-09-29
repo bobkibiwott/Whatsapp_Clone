@@ -2,6 +2,7 @@ package com.codept.whatsappclone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull ChatAdapter.viewHolder holder, int position) {
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        String userID=mAuth.getCurrentUser().getUid();
         DatabaseReference mRef=FirebaseDatabase.getInstance().getReference()
-                .child("messages").child(mAuth.getCurrentUser().getUid())
+                .child("messages").child(mAuth.getCurrentUser().getUid()).child("users")
                 .child(arrayList.get(position).getUserID()).child("message");
+        mRef.keepSynced(true);
         DatabaseReference userRef=FirebaseDatabase.getInstance().getReference()
                 .child("users").child(arrayList.get(position).getUserID());
+        userRef.keepSynced(true);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -81,9 +85,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
                 {
                     for(DataSnapshot snapshot1:snapshot.getChildren())
                     {
-                        ChatModel chatModel=snapshot1.getValue(ChatModel.class);
-                        assert chatModel != null;
-                        holder.message.setText(chatModel.getMessage());
+                        messageClass model=snapshot1.getValue(messageClass.class);
+                        assert model != null;
+                        holder.message.setText(model.getMessage());
 
                     }
                 }
@@ -95,6 +99,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
             }
         });
 
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +108,50 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
                 context.startActivity(intent);
             }
         });
+
+        /////////
+
+        //////____sending a delivery notice________//////
+
+
+            if(!userID.equals(arrayList.get(position).getUserID()))
+            {
+
+                DatabaseReference mesRef=FirebaseDatabase.getInstance().getReference()
+                        .child("messages").child(arrayList.get(position).getUserID())
+                        .child("users").child(userID).child("message");
+                mesRef.keepSynced(true);
+                mesRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if(snapshot.exists())
+                        {
+                            for(DataSnapshot snapshot1:snapshot.getChildren()){
+                                messageClass model=snapshot1.getValue(messageClass.class);
+                                model.setMessageID(snapshot1.getKey());
+                                if(model.getReceived().equals("false")){
+                                    mesRef.child(model.getMessageID()).child("received").setValue("true");
+                                }
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+        }
+
+
+
+
+        //////
 
 
 

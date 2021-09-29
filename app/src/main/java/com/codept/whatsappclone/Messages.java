@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,12 +60,22 @@ public class Messages extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         userID=mAuth.getCurrentUser().getUid();
         mRef= FirebaseDatabase.getInstance().getReference().child("messages");
+        mRef.keepSynced(true);
         userRef= FirebaseDatabase.getInstance().getReference().child("users").child(messageUserID);
+        userRef.keepSynced(true);
 
 
         ///initialisation
         message=findViewById(R.id.message);
         mSendMessageButton=findViewById(R.id.sendMessageButton);
+        ImageView backButton=findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
+            }
+        });
 
         mProfilePic=findViewById(R.id.messageProfilePic);
         mUsername=findViewById(R.id.messageUsername);
@@ -97,7 +109,9 @@ public class Messages extends AppCompatActivity {
                     messageMap.put("message",theMessage);
                     messageMap.put("sender",userID);
                     messageMap.put("receiver",messageUserID);
-                    messageMap.put("messageStatus","sending");
+                    messageMap.put("sent","false");
+                    messageMap.put("received","false");
+                    messageMap.put("seen","false");
                     messageMap.put("timestamp", ServerValue.TIMESTAMP);
                     message.setText("");
                     sendMessageFunction();
@@ -107,7 +121,7 @@ public class Messages extends AppCompatActivity {
     }
 
     private void fetchMessages() {
-        mRef.child(userID).child(messageUserID).child("message").addValueEventListener(new ValueEventListener() {
+        mRef.child(userID).child("users").child(messageUserID).child("message").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.hasChildren())
@@ -118,9 +132,7 @@ public class Messages extends AppCompatActivity {
                         messageClass messageclass=messageSnapShot.getValue(messageClass.class);
                         assert messageclass != null;
                         messageclass.setMessageID(messageSnapShot.getKey());
-
                         arrayList.add(messageclass);
-
                     }
                     messageRecycler.setAdapter(adapter);
                     int newMsgPosition = arrayList.size() - 1;
@@ -145,12 +157,12 @@ public class Messages extends AppCompatActivity {
 
     private void sendMessageFunction()
     {
-        DatabaseReference senderRef=mRef.child(userID).child(messageUserID).child("message");
+        DatabaseReference senderRef=mRef.child(userID).child("users").child(messageUserID).child("message");
         String randomMessageKey=senderRef.push().getKey();
         HashMap CustomMap = new HashMap();
-        CustomMap.put("/"+userID+"/"+messageUserID+"/message/"+randomMessageKey+"/",messageMap);
+        CustomMap.put("/"+userID+"/users/"+messageUserID+"/message/"+randomMessageKey+"/",messageMap);
         if(!userID.equals(messageUserID)) {
-            CustomMap.put("/"+messageUserID+"/"+userID+"/message/"+randomMessageKey+"/",messageMap);
+            CustomMap.put("/"+messageUserID+"/users/"+userID+"/message/"+randomMessageKey+"/",messageMap);
         }
         mRef.updateChildren(CustomMap).addOnSuccessListener(new OnSuccessListener() {
             @Override
@@ -167,8 +179,11 @@ public class Messages extends AppCompatActivity {
 
 
     }
+
+
     private void addProfileInfo()
     {
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -191,5 +206,4 @@ public class Messages extends AppCompatActivity {
         });
 
     }
-
 }

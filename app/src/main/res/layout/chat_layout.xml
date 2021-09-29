@@ -13,13 +13,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
+    <LinearLayout
         android:visibility="gone"
         android:id="@+id/incomingMessageCard"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="70dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/incoming_message_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -27,28 +26,33 @@
             android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:minWidth="80dp"
-            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_gravity="bottom|right"
-                android:id="@+id/incomingTime"
-                android:text="12:45"
-                android:textSize="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
             <TextView
                 android:id="@+id/incomingMessage"
                 android:textColor="@color/black"
-                android:text="hae niaje"
+                android:text="hae"
                 android:textSize="16dp"
+                android:layout_marginRight="35dp"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+
+
+                android:layout_gravity="bottom|end"
+                android:id="@+id/incomingTime"
+                android:text="12:45"
+                android:textSize="12dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"/>
 
 
 
 
         </FrameLayout>
-    </RelativeLayout>
+    </LinearLayout>
         <LinearLayout
             android:visibility="gone"
             android:layout_gravity="right"
@@ -56,11 +60,10 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="70dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/sent_message_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <FrameLayout
                 android:layout_marginRight="10dp"
                 android:padding="6dp"
                 android:minWidth="80dp"
@@ -72,15 +75,18 @@
                     android:textColor="@color/black"
                     android:text="Yes"
                     android:textSize="16dp"
+                    android:layout_marginRight="55dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <LinearLayout
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:layout_gravity="right"
+                    android:layout_gravity="right|bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textColor="#808080"
                         android:id="@+id/sentTime"
                         android:text="12:45"
                         android:textSize="12dp"
@@ -90,7 +96,7 @@
                         android:id="@+id/sentStatusImage"
                         android:layout_marginLeft="2dp"
                         android:scaleType="centerInside"
-                        android:src="@drawable/double_tick"
+                        android:src="@drawable/not_sent_yet_icon"
                         android:layout_width="16dp"
                         android:layout_height="16dp"/>
 
@@ -98,7 +104,7 @@
 
 
 
-            </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 

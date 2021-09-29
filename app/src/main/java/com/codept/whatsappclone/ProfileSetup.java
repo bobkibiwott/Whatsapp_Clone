@@ -54,6 +54,7 @@ public class ProfileSetup extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         currentUserId=firebaseAuth.getCurrentUser().getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
+        databaseReference.keepSynced(true);
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
