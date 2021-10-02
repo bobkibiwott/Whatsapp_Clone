@@ -29,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,7 +53,7 @@ public class ProfileSetup extends AppCompatActivity {
         profilePic=findViewById(R.id.profileSetupProfilePhoto);
         progressBar=findViewById(R.id.profileSetupProgressBar);
         firebaseAuth=FirebaseAuth.getInstance();
-        currentUserId=firebaseAuth.getCurrentUser().getUid();
+        currentUserId= Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
         databaseReference.keepSynced(true);
         profilePic.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +77,15 @@ public class ProfileSetup extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!isLoggedIn())
+        {
+          toStartScreen();
+        }
     }
 
     private void uploadData() {
@@ -207,11 +217,11 @@ public class ProfileSetup extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser()!=null)
         {
             bool=true;
-            Toast.makeText(ProfileSetup.this, "is authenticated", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ProfileSetup.this, "is authenticated", Toast.LENGTH_SHORT).show();
         }
         else{
             bool=false;
-            Toast.makeText(ProfileSetup.this, "is not authenticated", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ProfileSetup.this, "is not authenticated", Toast.LENGTH_SHORT).show();
         }
         return bool;
 

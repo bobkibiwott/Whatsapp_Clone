@@ -24,8 +24,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -121,7 +124,9 @@ public class Messages extends AppCompatActivity {
     }
 
     private void fetchMessages() {
-        mRef.child(userID).child("users").child(messageUserID).child("message").addValueEventListener(new ValueEventListener() {
+        mRef.child(userID).child("users").child(messageUserID).child("message");
+        Query messageQuery= mRef.child(userID).child("users").child(messageUserID).child("message").orderByChild("timestamp");
+                messageQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.hasChildren())
@@ -191,7 +196,25 @@ public class Messages extends AppCompatActivity {
                 {
                     User userData=snapshot.getValue(User.class);
                     assert userData != null;
-                    Picasso.get().load(userData.getProfilePic()).into(mProfilePic);
+                    Picasso.get().load(userData.getProfilePic())
+                            .placeholder(R.drawable.profile)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .into(mProfilePic, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Picasso.get().load(userData.getProfilePic())
+                                            .placeholder(R.drawable.profile)
+                                            .error(R.drawable.profile)
+                                            .into(mProfilePic);
+
+
+                                }
+                            });
                     mUsername.setText(userData.getUsername());
                 }
                 else Toast.makeText(Messages.this, "Error: Occurred ", Toast.LENGTH_SHORT).show();

@@ -31,193 +31,254 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_below="@+id/toolbar"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="-1dp"
+        android:orientation="vertical">
+
         <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="150dp"
-            android:layout_height="150dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="150dp"
-            android:src="@drawable/profile"
-            android:layout_height="150dp"/>
+            android:layout_marginTop="20dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+
+                android:id="@+id/profilePic"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/profile" />
+            <ProgressBar
+                android:id="@+id/profileSetupProgressBar"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="25dp"
+                android:id="@+id/profileEditProfilePic"
                 android:layout_width="45dp"
-                android:layout_margin="5dp"
-                app:cardBackgroundColor="@color/teal_700"
+                android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_height="45dp">
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/teal_700"
+                app:cardCornerRadius="25dp">
+
                 <ImageView
-                    android:layout_gravity="center"
-                    android:src="@drawable/white_camera"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/white_camera" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
+
         <LinearLayout
-            android:paddingTop="10dp"
-            android:orientation="horizontal"
+            android:id="@+id/updateUsername"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
             <ImageView
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
-                android:layout_marginTop="10sp"
-                android:src="@drawable/personal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="20sp"
+                android:src="@drawable/personal" />
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
-                        android:layout_toLeftOf="@+id/edit_username"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/edit_username"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:text="Name"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="Name" />
+
                         <TextView
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:id="@+id/profileUsername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:text="Bobby"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/edit_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="10dp"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/edit_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/edit_icon" />
 
                 </RelativeLayout>
+
                 <TextView
-                    android:layout_marginRight="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="This is not your username or pin. This name will be visible to your WhatsApp contacts."
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginRight="5dp"
+                    android:text="This is not your username or pin. This name will be visible to your WhatsApp contacts." />
+
                 <View
-                    android:layout_marginTop="8dp"
-                    android:background="#808080"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"/>
+                    android:layout_height="1px"
+                    android:layout_marginTop="18dp"
+                    android:background="#FFDFDFDF" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
-            android:paddingTop="10dp"
-            android:orientation="horizontal"
+            android:id="@+id/updateStatus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingTop="18dp">
+
             <ImageView
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
-                android:layout_marginTop="10sp"
-                android:src="@drawable/ic_baseline_error_24"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="20sp"
+                android:src="@drawable/ic_baseline_error_24" />
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
-                        android:layout_toLeftOf="@+id/edit_status"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/edit_status"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:text="About"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="About" />
+
                         <TextView
+                            android:id="@+id/profileStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
                             android:text="Hey there am using Whatsapp!"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/edit_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="10dp"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/edit_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/edit_icon" />
 
                 </RelativeLayout>
+
                 <TextView
-                    android:layout_marginRight="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="This is not your username or pin. This name will be visible to your WhatsApp contacts."
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginRight="5dp"
+                    android:text="This is not your username or pin. This name will be visible to your WhatsApp contacts." />
+
                 <View
-                    android:layout_marginTop="8dp"
-                    android:background="#808080"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"/>
+                    android:layout_height="1px"
+                    android:layout_marginTop="18dp"
+                    android:background="#FFDFDFDF" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
-            android:paddingTop="10dp"
-            android:paddingBottom="15dp"
-            android:orientation="horizontal"
+            android:id="@+id/updatePhoneNumber"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingTop="18dp"
+            android:paddingBottom="15dp">
+
             <ImageView
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
-                android:layout_marginTop="10sp"
-                android:src="@drawable/call_green_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="20sp"
+                android:src="@drawable/call_green_icon" />
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:text="Phone"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="Phone" />
+
                         <TextView
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
+                            android:id="@+id/profilePhoneNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:text="+254 7** ******"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>

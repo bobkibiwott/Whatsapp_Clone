@@ -41,6 +41,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/profileClicks"
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_marginTop="10dp"
@@ -53,6 +54,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_marginLeft="15sp"
                     android:layout_marginRight="15sp"
+                    android:id="@+id/settingProfilePic"
                     android:src="@drawable/profile"
                     android:layout_width="60dp"
                     android:layout_height="60dp"/>
@@ -69,12 +71,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <TextView
+                                android:id="@+id/settingsUsername"
                                 android:textSize="18sp"
                                 android:textColor="@color/black"
                                 android:text="Bobby"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <TextView
+                                android:id="@+id/settingsStatus"
                                 android:layout_marginTop="5dp"
                                 android:text="Hey there I am using WhatsApp!"
                                 android:layout_width="wrap_content"
@@ -372,7 +376,7 @@
                 <TextView
                     android:layout_marginRight="5dp"
                     android:text="Firebase"
-                    android:textColor="#FFC107"
+                    android:textColor="@color/teal_700"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

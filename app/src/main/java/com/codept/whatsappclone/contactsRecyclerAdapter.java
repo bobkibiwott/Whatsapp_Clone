@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +48,24 @@ public class contactsRecyclerAdapter extends RecyclerView.Adapter<contactsRecycl
 //        User user=userArrayList.get(position);
         holder.username.setText(userArrayList.get(position).getUsername());
         holder.status.setText(userArrayList.get(position).getStatus());
-        Picasso.get().load(userArrayList.get(position).getProfilePic()).into(holder.profilePic);
+        Picasso.get().load(userArrayList.get(position).getProfilePic())
+                .placeholder(R.drawable.profile).networkPolicy(NetworkPolicy.OFFLINE)
+                .into(holder.profilePic, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load(userArrayList.get(position).getProfilePic())
+                                .placeholder(R.drawable.profile)
+                                .error(R.drawable.profile)
+                                .into(holder.profilePic);
+
+
+                    }
+                });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +78,7 @@ public class contactsRecyclerAdapter extends RecyclerView.Adapter<contactsRecycl
 
             }
         });
+        holder.cardView.setVisibility(View.VISIBLE);
 
     }
 

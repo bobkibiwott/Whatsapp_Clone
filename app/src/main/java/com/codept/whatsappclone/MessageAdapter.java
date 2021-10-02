@@ -23,7 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,15 +52,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.myViewHo
     @Override
     public void onBindViewHolder(@NonNull @NotNull MessageAdapter.myViewHolder holder, int position) {
         messageClass mesClass=arrayList.get(position);
-        String userId= FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        String userId= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid().toString();
 
         String userID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        TimeClass mTime=new TimeClass(mesClass.getTimestamp());
         //If I sent the message
         if(TextUtils.equals(userId,mesClass.getSender()))
         {
+            holder.sTime.setText(mTime.getTime());
             holder.sMessage.setText(mesClass.getMessage());
             holder.sentCard.setVisibility(View.VISIBLE);
-            if(mesClass.getSeen().equals("true"))
+            if(TextUtils.equals(mesClass.getSeen(),"true"))
             {
                 holder.sentStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.seen_icon));
 
